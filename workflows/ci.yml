@@ -31,3 +31,4 @@ jobs:
       - name: Jalankan Selenium Tests
         run: |
           python test_app.py
+
