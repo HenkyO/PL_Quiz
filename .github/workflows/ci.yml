@@ -25,8 +25,13 @@ jobs:
           pip install selenium
           sudo apt-get update
           sudo apt-get install -y chromium-chromedriver chromium-browser
-          sudo ln -sf /usr/lib/chromium-browser/chromedriver /usr/bin/chromedriver
+          # Periksa apakah chromedriver sudah ter-link dengan benar,
+          # jika tidak, buat symbolic link
+          if [ "$(readlink -f /usr/bin/chromedriver)" != "/usr/lib/chromium-browser/chromedriver" ]; then
+            sudo ln -sf /usr/lib/chromium-browser/chromedriver /usr/bin/chromedriver
+          else
+            echo "Chromedriver sudah ter-link dengan benar."
+          fi
 
-      - name: Jalankan Selenium Tests
-        run: |
-          python test_app.py
+      - name: Run Selenium Tests
+        run: python test_app.py
